@@ -1,6 +1,7 @@
 # main.py
 from cidade import Atenas, Esparta, Corinto
 from lider import AlexandreGrande, RamesesII
+from jogador import Jogador
 import random
 
 def escolher_cidade():
@@ -8,13 +9,11 @@ def escolher_cidade():
     Exibe um menu para o jogador escolher sua cidade.
     Retorna um objeto Cidade com base na escolha.
     """
-    # Lista de cidades disponíveis
     cidades_disponiveis = [Atenas(), Esparta(), Corinto()]
 
     print("Bem-vindo ao jogo!")
     print("Escolha sua cidade:")
 
-    # Exibe as informações das cidades
     for i, cidade in enumerate(cidades_disponiveis, start=1):
         print(f"{i}. {cidade.exibir_info()}")
 
@@ -74,7 +73,6 @@ def escolher_lider_aleatorio():
     lider_escolhido = random.choice(lideres_disponiveis)
     return lider_escolhido
 
-# main.py (atualização da função main)
 def main():
     """
     Função principal do jogo.
@@ -91,11 +89,20 @@ def main():
 
     # Máquina escolhe uma cidade aleatória
     cidade_maquina = escolher_cidade_aleatoria()
-    print(f"\nA máquina escolheu a {cidade_maquina}!")
 
     # Máquina escolhe um líder aleatório
     lider_maquina = escolher_lider_aleatorio()
-    print(f"\nA máquina escolheu o líder {lider_maquina}!")
+
+    # Exibe as escolhas do jogador e da máquina
+    print(f"\n>>> Você escolheu {cidade_jogador.nome} e {lider_jogador.nome} <<<")
+    print(f"\n>>> A máquina escolheu {cidade_maquina.nome} e {lider_maquina.nome} <<<")
+
+    # Cria o jogador
+    jogador = Jogador(cidade_jogador, lider_jogador)
 
     # Aqui você pode continuar com a lógica do jogo, como criar o jogador, o inimigo, etc.
     print("\nO jogo está começando...")
+    print(f"\n{jogador}")
+
+if __name__ == "__main__":
+    main()
