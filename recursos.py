@@ -3,7 +3,6 @@ class Recursos:
     def __init__(self, comida=5, ouro=5, ciencia=5, fe=5, cultura=5):
         """
         Inicializa os recursos com valores padrão ou personalizados.
-        Cada jogador começa com 5 de cada recurso.
         """
         self.comida = comida
         self.ouro = ouro
