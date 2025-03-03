@@ -209,5 +209,80 @@ def main():
     print("\nO jogo está começando...")
     print(f"\n{jogador}")
 
+def verificar_mao(jogador):
+    while len(jogador.cartas_na_mao) > 9:
+        carta_a_remover = random.choice(jogador.cartas_na_mao)
+        jogador.cartas_na_mao.remove(carta_a_remover)
+        print(f"Carta removida: {carta_a_remover.nome} (para manter o limite de 9 cartas na mão)")
+
+def turno(jogador, maquina, campo, deck_jogador, deck_maquina):
+    # Começa o turno com compra de 2 cartas para o jogador e a máquina
+    print("\nInício do Turno")
+    
+    jogador.comprar_cartas(2)
+    maquina.comprar_cartas(2)
+    
+    # Verifica se ambos têm no máximo 9 cartas na mão
+    verificar_mao(jogador)
+    verificar_mao(maquina)
+    
+    # Exibe os recursos, cartas na mão e o campo de batalha após compra
+    print(f"Recursos de {jogador.nome}: {jogador.exibir_recursos()}")
+    jogador.exibir_cartas()
+    print(f"\nRecursos de {maquina.nome}: {maquina.exibir_recursos()}")
+    maquina.exibir_cartas()
+    
+    campo.exibir_campo()
+    
+    # Continue com o turno (ações do jogador e da máquina)
+    print("\nO jogador pode realizar suas ações agora.")
+    # Adicione a lógica do jogo para o turno aqui
+
+def main():
+    print("===== Início do Jogo =====")
+    
+    # Escolha das cidades e líderes
+    cidade_jogador = escolher_cidade()
+    lider_jogador = escolher_lider()
+    cidade_maquina = random.choice([Atenas(), Esparta(), Corinto()])
+    lider_maquina = random.choice([AlexandreGrande(), RamesesII()])
+    
+    jogador = Jogador(cidade_jogador, lider_jogador)
+    maquina = Jogador(cidade_maquina, lider_maquina)
+    
+    print(f"\nVocê escolheu {cidade_jogador.nome} e {lider_jogador.nome}")
+    print(f"A máquina escolheu {cidade_maquina.nome} e {lider_maquina.nome}")
+    
+    # Montando os decks
+    print("\nMontando o deck do jogador...")
+    deck_jogador = montar_deck(jogador)
+    deck_jogador.exibir_deck()
+    
+    print("\nMontando o deck da máquina...")
+    deck_maquina = montar_deck(maquina)
+    
+    # Embaralhando os decks
+    print("\nEmbaralhando os decks...")
+    random.shuffle(deck_jogador.cartas)
+    random.shuffle(deck_maquina.cartas)
+    
+    # Comprando 5 cartas iniciais para o jogador e a máquina
+    print("\nComprando cartas iniciais...")
+    jogador.comprar_cartas(5)
+    maquina.comprar_cartas(5)
+    
+    print(f"Cartas iniciais do jogador: {jogador.exibir_cartas()}")
+    print(f"Cartas iniciais da máquina: {maquina.exibir_cartas()}")
+    
+    # Inicializando o campo de batalha
+    campo = CampoDeBatalha()
+    campo.exibir_campo()
+    
+    # Iniciando o turno
+    turno(jogador, maquina, campo, deck_jogador, deck_maquina)
+
+if __name__ == "__main__":
+    main()
+
 if __name__ == "__main__":
     main()
