@@ -56,3 +56,34 @@ class Recursos:
         Retorna uma representação simplificada dos recursos.
         """
         return f"Comida: {self.comida}, Ouro: {self.ouro}, Ciência: {self.ciencia}, Fé: {self.fe}, Cultura: {self.cultura}"
+    
+# Definindo uma classe base para as cartas de recursos
+class CartaRecurso:
+    def __init__(self, nome, tipo_recurso, quantidade):
+        self.nome = nome
+        self.tipo_recurso = tipo_recurso
+        self.quantidade = quantidade
+
+    def exibir_info(self):
+        return f"{self.nome} - Quantidade: {self.quantidade} {self.tipo_recurso.capitalize()}"
+
+# Modificando as classes de recursos para herdar de CartaRecurso
+class CartaComida(CartaRecurso):
+    def __init__(self):
+        super().__init__("Carta de Comida", "Comida", 1)
+
+class CartaOuro(CartaRecurso):
+    def __init__(self):
+        super().__init__("Carta de Ouro", "Ouro", 1)
+
+class CartaCiencia(CartaRecurso):
+    def __init__(self):
+        super().__init__("Carta de Ciência", "Ciência", 1)
+
+class CartaFe(CartaRecurso):
+    def __init__(self):
+        super().__init__("Carta de Fé", "Fé", 1)
+
+class CartaCultura(CartaRecurso):
+    def __init__(self):
+        super().__init__("Carta de Cultura", "Cultura", 1)
