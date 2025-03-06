@@ -1,3 +1,4 @@
+# main.py
 from cidade import Atenas, Esparta, Corinto
 from lider import AlexandreGrande, RamesesII
 from jogador import Jogador
@@ -7,7 +8,6 @@ from estrutura import *
 from deck import Deck
 from recursos import CartaComida, CartaOuro, CartaCiencia, CartaFe, CartaCultura, CartaRecurso
 import random
-
 
 def escolher_cidade():
     cidades_disponiveis = [Atenas(), Esparta(), Corinto()]
@@ -59,21 +59,23 @@ def montar_deck_maquina():
         CartaComida(), CartaOuro(), CartaCiencia(), CartaFe(), CartaCultura()
     ]
     
-    deck_maquina = []
+    deck_maquina = Deck()  # Cria um objeto Deck
     
     # Adicionar 20 unidades aleatórias (ou o máximo possível)
-    deck_maquina += random.sample(cartas_unidade, min(20, len(cartas_unidade)))
+    for carta in random.sample(cartas_unidade, min(20, len(cartas_unidade))):
+        deck_maquina.adicionar_carta(carta)
     
     # Adicionar 20 estruturas aleatórias (ou o máximo possível)
-    deck_maquina += random.sample(cartas_estrutura, min(20, len(cartas_estrutura)))
+    for carta in random.sample(cartas_estrutura, min(20, len(cartas_estrutura))):
+        deck_maquina.adicionar_carta(carta)
     
     # Adicionar 20 recursos aleatórios (ou o máximo possível)
-    deck_maquina += random.sample(cartas_recurso, min(20, len(cartas_recurso)))
+    for carta in random.sample(cartas_recurso, min(20, len(cartas_recurso))):
+        deck_maquina.adicionar_carta(carta)
     
-    random.shuffle(deck_maquina)  # Embaralha o deck da máquina
+    random.shuffle(deck_maquina.cartas)  # Embaralha o deck da máquina
     
     return deck_maquina
-
 
 def montar_deck(jogador):
     deck = Deck()
@@ -187,57 +189,29 @@ def montar_deck(jogador):
     print("\nDeck completo!")
     return deck
 
-
-def main():
-    print("===== Início do Jogo =====")
-    cidade_jogador = escolher_cidade()
-    lider_jogador = escolher_lider()
-    jogador = Jogador(cidade_jogador, lider_jogador)
-    print(f"\nVocê escolheu {cidade_jogador.nome} e {lider_jogador.nome}")
-    
-    print("\nMontando seu deck...")
-    deck_jogador = montar_deck(jogador)
-    deck_jogador.exibir_deck()
-    
-    print("\nMontando o deck da máquina...")
-    deck_maquina = montar_deck_maquina()
-    
-    print("\nEmbaralhando os decks...")
-    random.shuffle(deck_jogador.cartas)
-    random.shuffle(deck_maquina)
-    
-    print("\nO jogo está começando...")
-    print(f"\n{jogador}")
-
-def verificar_mao(jogador):
-    while len(jogador.cartas_na_mao) > 9:
-        carta_a_remover = random.choice(jogador.cartas_na_mao)
-        jogador.cartas_na_mao.remove(carta_a_remover)
-        print(f"Carta removida: {carta_a_remover.nome} (para manter o limite de 9 cartas na mão)")
-
 def turno(jogador, maquina, campo, deck_jogador, deck_maquina):
     # Começa o turno com compra de 2 cartas para o jogador e a máquina
     print("\nInício do Turno")
     
-    jogador.comprar_cartas(2)
-    maquina.comprar_cartas(2)
+    jogador.comprar_cartas(2, deck_jogador)  # Passando o deck_jogador como argumento
+    maquina.comprar_cartas(2, deck_maquina)  # Passando o deck_maquina como argumento
     
     # Verifica se ambos têm no máximo 9 cartas na mão
-    verificar_mao(jogador)
-    verificar_mao(maquina)
+    jogador.verificar_mao()
+    maquina.verificar_mao()
     
     # Exibe os recursos, cartas na mão e o campo de batalha após compra
-    print(f"Recursos de {jogador.nome}: {jogador.exibir_recursos()}")
-    jogador.exibir_cartas()
-    print(f"\nRecursos de {maquina.nome}: {maquina.exibir_recursos()}")
-    maquina.exibir_cartas()
+    print(f"Recursos de {jogador.cidade.nome}: {jogador.exibir_recursos()}")
+    print(f"Cartas na mão do jogador:\n{jogador.exibir_cartas()}")
+    print(f"\nRecursos de {maquina.cidade.nome}: {maquina.exibir_recursos()}")
+    print(f"Cartas na mão da máquina:\n{maquina.exibir_cartas()}")
     
     campo.exibir_campo()
     
     # Continue com o turno (ações do jogador e da máquina)
     print("\nO jogador pode realizar suas ações agora.")
     # Adicione a lógica do jogo para o turno aqui
-
+    
 def main():
     print("===== Início do Jogo =====")
     
@@ -259,7 +233,7 @@ def main():
     deck_jogador.exibir_deck()
     
     print("\nMontando o deck da máquina...")
-    deck_maquina = montar_deck(maquina)
+    deck_maquina = montar_deck_maquina()
     
     # Embaralhando os decks
     print("\nEmbaralhando os decks...")
@@ -268,8 +242,8 @@ def main():
     
     # Comprando 5 cartas iniciais para o jogador e a máquina
     print("\nComprando cartas iniciais...")
-    jogador.comprar_cartas(5)
-    maquina.comprar_cartas(5)
+    jogador.comprar_cartas(5, deck_jogador)  # Passando o deck_jogador como argumento
+    maquina.comprar_cartas(5, deck_maquina)  # Passando o deck_maquina como argumento
     
     print(f"Cartas iniciais do jogador: {jogador.exibir_cartas()}")
     print(f"Cartas iniciais da máquina: {maquina.exibir_cartas()}")
@@ -280,9 +254,6 @@ def main():
     
     # Iniciando o turno
     turno(jogador, maquina, campo, deck_jogador, deck_maquina)
-
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()

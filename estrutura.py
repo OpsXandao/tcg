@@ -1,3 +1,4 @@
+# estrutura.py
 class Estrutura:
     def __init__(self, nome, custo, efeito, descricao):
         self.nome = nome
@@ -25,9 +26,48 @@ class Estrutura:
     def custo_fe(self):
         return self.custo.get("Fe", 0)
 
+    def gerar_recursos(self, recursos):
+        """
+        Adiciona recursos ao jogador de acordo com o efeito da estrutura.
+        :param recursos: Objeto da classe Recursos do jogador.
+        """
+        if "+1 Comida" in self.efeito:
+            recursos.adicionar_recursos(comida=1)
+        elif "+2 Comida" in self.efeito:
+            recursos.adicionar_recursos(comida=2)
+        elif "+3 Comida" in self.efeito:
+            recursos.adicionar_recursos(comida=3)
+
+        if "+1 Ouro" in self.efeito:
+            recursos.adicionar_recursos(ouro=1)
+        elif "+2 Ouro" in self.efeito:
+            recursos.adicionar_recursos(ouro=2)
+        elif "+3 Ouro" in self.efeito:
+            recursos.adicionar_recursos(ouro=3)
+
+        if "+1 Ciência" in self.efeito:
+            recursos.adicionar_recursos(ciencia=1)
+        elif "+2 Ciência" in self.efeito:
+            recursos.adicionar_recursos(ciencia=2)
+        elif "+3 Ciência" in self.efeito:
+            recursos.adicionar_recursos(ciencia=3)
+
+        if "+1 Fé" in self.efeito:
+            recursos.adicionar_recursos(fe=1)
+        elif "+2 Fé" in self.efeito:
+            recursos.adicionar_recursos(fe=2)
+        elif "+3 Fé" in self.efeito:
+            recursos.adicionar_recursos(fe=3)
+
+        if "+1 Cultura" in self.efeito:
+            recursos.adicionar_recursos(cultura=1)
+        elif "+2 Cultura" in self.efeito:
+            recursos.adicionar_recursos(cultura=2)
+        elif "+3 Cultura" in self.efeito:
+            recursos.adicionar_recursos(cultura=3)
+
     def __str__(self):
         return f"{self.nome} - Custo: {self.custo} - Efeito: {self.efeito} - {self.descricao}"
-
 # Estruturas de Comida (🌽)
 class HortaComunitaria(Estrutura):
     def __init__(self):

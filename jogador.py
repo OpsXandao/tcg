@@ -10,6 +10,7 @@ class Jogador:
         self.cidade = cidade
         self.lider = lider
         self.recursos = Recursos()  # Inicializa com 5 de cada recurso
+        self.mao = []  # Lista para armazenar as cartas na mão do jogador
 
     def adicionar_recursos(self, comida=0, ouro=0, ciencia=0, fe=0, cultura=0):
         """
@@ -29,6 +30,24 @@ class Jogador:
         Exibe os recursos do jogador.
         """
         return self.recursos.exibir_recursos()
+
+    def comprar_cartas(self, quantidade, deck):
+        """
+        Compra uma quantidade específica de cartas do deck e adiciona à mão do jogador.
+        """
+        for _ in range(quantidade):
+            if len(deck.cartas) > 0:
+                carta_comprada = deck.comprar_carta()
+                self.mao.append(carta_comprada)
+            else:
+                print("O deck está vazio! Não é possível comprar mais cartas.")
+                break
+
+    def exibir_cartas(self):
+        """
+        Exibe as cartas na mão do jogador.
+        """
+        return "\n".join([carta.exibir_info() for carta in self.mao])
 
     def __str__(self):
         """

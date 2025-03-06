@@ -1,3 +1,4 @@
+# deck.py
 class Deck:
     def __init__(self):
         self.cartas = []
@@ -12,6 +13,17 @@ class Deck:
             print(f"Carta {carta.nome} removida do deck.")
         else:
             print("Carta não encontrada no deck.")
+
+    def comprar_carta(self):
+        """
+        Remove e retorna a carta do topo do deck.
+        Se o deck estiver vazio, retorna None.
+        """
+        if len(self.cartas) > 0:
+            return self.cartas.pop()  # Remove e retorna a última carta do deck
+        else:
+            print("O deck está vazio! Não é possível comprar mais cartas.")
+            return None
 
     def exibir_deck(self):
         if not self.cartas:
