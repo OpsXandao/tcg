@@ -18,6 +18,16 @@ class Unidade:
         Retorna uma representação simplificada da unidade.
         """
         return f"{self.nome} (Ataque: {self.ataque}, Defesa: {self.defesa}, Habilidade: {self.habilidade})"
+    
+    def exibir_info(self):
+        """
+        Retorna informações detalhadas da unidade.
+        """
+        return (f"Nome: {self.nome}\n"
+                f"Ataque: {self.ataque}\n"
+                f"Defesa: {self.defesa}\n"
+                f"Custo - Comida: {self.custo_comida}, Ouro: {self.custo_ouro}, Ciência: {self.custo_ciencia}, Cultura: {self.custo_cultura}, Fé: {self.custo_fe}\n"
+                f"Habilidade: {self.habilidade}")
 
 
 # Unidades Genéricas

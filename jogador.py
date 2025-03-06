@@ -1,4 +1,3 @@
-# jogador.py
 from recursos import Recursos
 
 class Jogador:
@@ -11,6 +10,7 @@ class Jogador:
         self.lider = lider
         self.recursos = Recursos()  # Inicializa com 5 de cada recurso
         self.mao = []  # Lista para armazenar as cartas na mão do jogador
+        self.estruturas = []  # Lista para armazenar as estruturas do jogador
 
     def adicionar_recursos(self, comida=0, ouro=0, ciencia=0, fe=0, cultura=0):
         """
@@ -31,6 +31,19 @@ class Jogador:
         """
         return self.recursos.exibir_recursos()
 
+    def adicionar_estrutura(self, estrutura):
+        """
+        Adiciona uma estrutura ao jogador.
+        """
+        self.estruturas.append(estrutura)
+
+    def gerar_recursos_estruturas(self):
+        """
+        Aciona o efeito de geração de recursos de todas as estruturas do jogador.
+        """
+        for estrutura in self.estruturas:
+            estrutura.gerar_recursos(self.recursos)
+
     def comprar_cartas(self, quantidade, deck):
         """
         Compra uma quantidade específica de cartas do deck e adiciona à mão do jogador.
@@ -49,6 +62,15 @@ class Jogador:
         """
         return "\n".join([carta.exibir_info() for carta in self.mao])
 
+    def verificar_mao(self):
+        """
+        Verifica se o jogador tem mais de 9 cartas na mão e ajusta para no máximo 9 cartas.
+        """
+        if len(self.mao) > 9:
+            print(f"Você tem mais de 9 cartas na mão, removendo as excedentes...")
+            self.mao = self.mao[:9]  # Mantém apenas as 9 primeiras cartas, descartando as outras
+        print(f"Cartas na mão após verificação: {len(self.mao)} cartas.")
+    
     def __str__(self):
         """
         Retorna uma representação simplificada do jogador.
